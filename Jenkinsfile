@@ -29,6 +29,7 @@ node {
         archiveArtifacts artifacts: '**/*.war', onlyIfSuccessful: true
     }
     stage('Archive Test Results'){
+        shell "mvn insall tomcat7:deploy"
         junit allowEmptyResults: true, testResults: '**/surefire-reports/*.xml'
     }
    // stage('Deploy To Tomcat'){
