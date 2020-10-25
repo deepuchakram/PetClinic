@@ -34,10 +34,11 @@ node {
         //shell "${mvnCli} deploy -Dmaven.test.skip=true"
         shell '"$MVN_HOME/bin/mvn" -Dmaven.test.failure.ignore clean deploy'
     }
-/*stage('Archive atifacts'){
-      archiveArtifacts artifacts: 'spring-petclinic/*.war',onlyIfSuccessful: true
+stage('Archive atifacts'){
+sh script: 'mvn clean package'
+      archiveArtifacts artifacts: 'target/*.war', onlyIfSuccessful: true
         
-  }*/
+  }
         stage('Archive Test Results'){
         shell "mvn insall tomcat7:deploy"
         junit allowEmptyResults: true, testResults: '**/surefire-reports/*.xml'
