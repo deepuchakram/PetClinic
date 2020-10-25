@@ -458,12 +458,12 @@
                 <repository>
                     <id> deployment</id>
                     <name> Internal Releases</name>
-                    <url>http://13.126.21.144:8081/repository/SAMPLE-REL/</url>
+                    <url>http://13.126.21.144:8081/repository/spring-petclinic-rel/</url>
                  </repository> 
                 <snapshotRepository>
                     id> deployment</id>
                     <name> Internal snapshot Releases</name>
-                    <url>http://13.126.21.144:8081/repository/SAMPLE-SNAP/</url>
+                    <url>http://13.126.21.144:8081/repository/spring-petclinic/</url>
                  </snapshotRepository> 
             </distributionManagement>
         </profile>
