@@ -35,7 +35,7 @@ node {
         shell '"$MVN_HOME/bin/mvn" -Dmaven.test.failure.ignore clean deploy'
     }
 stage('Archive atifacts'){
-sh script: 'mvn clean package'
+shell 'mvn clean package'
       archiveArtifacts artifacts: 'target/*.war', onlyIfSuccessful: true
         
   }
