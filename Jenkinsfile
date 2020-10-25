@@ -39,24 +39,10 @@ node {
         
   //  }
     Stage ('Upload war To Nexus'){
-           
-      shell '"$MVN_HOME/bin/mvn" -Dmaven.test.failure.ignore clean deploy'      
-      nexusArtifactUploader artifacts: [
-[ 
-artifactId: 'spring-petclinic'
-classifier: ' ',
-file: 'target/petclinic-1.0.0.war',
-type: 'war'
-]
-],
-credentialsId: 'deployment'
-groupId: 'org.springframework.samples',
-nexusUrl: '13.126.21.144:8081',
-nexusVersion: 'nexus3',
-protocol: 'http',
-repository: 'spring-petclinic',
-version: '1.0.0'
-}
+        
+        
+      shell mvn deploy:deploy-file -DgeneratePom=false -DrepositoryId=nexus -Durl=http://http://13.126.21.144:8081/repository/maven-snapshots -DpomFile=pom.xml -Dfile=target/petclinic-1.0.0.jar     
+              }
 	
     
     stage('Archive Test Results'){
