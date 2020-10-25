@@ -37,10 +37,16 @@ node {
         //shell "${mvnCli} deploy -Dmaven.test.skip=true"
         shell '"$MVN_HOME/bin/mvn" -Dmaven.test.failure.ignore clean deploy'
     }
- /*  stage('Archive atifacts'){
-        archiveArtifacts artifacts: 'spring-petclinic/*.war',onlyIfSuccessful: true
+ // stage('Archive atifacts'){
+        //archiveArtifacts artifacts: 'spring-petclinic/*.war',onlyIfSuccessful: true
         
-    }*/
+  //  }
+    Stage ('Upload war To Nexus'){
+		
+	shell nexusArtifactUploader credentialsId: 'nexus', groupId: 'org.springframework.samples', nexusUrl: '13.126.21.144:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'spring-petclinic', version: '1.0.0'
+
+	}	
+    
     stage('Archive Test Results'){
         shell "mvn insall tomcat7:deploy"
         junit allowEmptyResults: true, testResults: '**/surefire-reports/*.xml'
