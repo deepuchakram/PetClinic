@@ -23,10 +23,10 @@ node {
         shell "${mvnCli} clean compile"
     }
    stage("build & SonarQube analysis") {
-          node {
+          
               withSonarQubeEnv('My SonarQube Server') {
                  shell 'mvn clean package sonar:sonar'
-              }
+             
           }
       }
 
