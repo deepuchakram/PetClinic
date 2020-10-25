@@ -23,12 +23,11 @@ node {
         shell "${mvnCli} clean compile"
     }
    stage("build & SonarQube analysis") {
-          
-              withSonarQubeEnv('My SonarQube Server') {
-                 shell 'mvn clean package sonar:sonar'
+                     
+          shell 'mvn clean package sonar:sonar'
              
           }
-      }
+      
 
       stage("Quality Gate"){
           timeout(time: 1, unit: 'HOURS') {
