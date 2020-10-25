@@ -26,7 +26,7 @@ node {
         shell "${mvnCli} package -Dmaven.test.skip=true"
     }
   /*  stage('Archive atifacts'){
-        //archiveArtifacts artifacts: '**/*.war', onlyIfSuccessful: true
+        archiveArtifacts artifacts: '/*.war',onlyIfSuccessful: true
         
     }*/
     stage('Archive Test Results'){
