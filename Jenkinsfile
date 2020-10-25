@@ -25,6 +25,11 @@ node {
     stage('Code Analysis') {
         shell 'mvn sonar:sonar'
     }
+    stage("Quality Gate") {
+        timeout(time: 1, unit: 'HOURS') {
+            waitForQualityGate abortPipeline: true
+        }
+    }
     
     stage('maven package'){
         shell "${mvnCli} package -Dmaven.test.skip=true"
