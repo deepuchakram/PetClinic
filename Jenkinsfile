@@ -23,12 +23,9 @@ node {
         shell "${mvnCli} clean compile"
     }
    stage("build & SonarQube analysis") {
-                     
-          shell 'mvn clean package sonar:sonar'
-             
-          }
-      
-      
+        shell 'mvn clean package sonar:sonar'      
+        }
+            
     stage('maven package'){
         shell "${mvnCli} package -Dmaven.test.skip=true"
     }
@@ -42,10 +39,23 @@ node {
         
   //  }
     Stage ('Upload war To Nexus'){
-		
-	shell nexusArtifactUploader credentialsId: 'nexus', groupId: 'org.springframework.samples', nexusUrl: '13.126.21.144:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'spring-petclinic', version: '1.0.0'
-
-	}	
+            shell nexusArtifactsUploader artifacts: [
+[ 
+artifactId: ‘spring-petclinic’
+classifier: ‘ ‘,
+file: ‘target/petclinic-1.0.0.war’,
+type: ‘war’
+]
+],
+credentialsId: ‘deployment’
+groupId: ‘org.springframework.samples’,
+nexusUrl: ‘13.126.21.144:8081’,
+nexusVersion: ’nexus3’,
+protocol: ‘http’,
+repository: ‘spring-petclinic’,
+version: ‘1.0.0’
+}
+	
     
     stage('Archive Test Results'){
         shell "mvn insall tomcat7:deploy"
