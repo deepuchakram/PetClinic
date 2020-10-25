@@ -34,18 +34,11 @@ node {
         //shell "${mvnCli} deploy -Dmaven.test.skip=true"
         shell '"$MVN_HOME/bin/mvn" -Dmaven.test.failure.ignore clean deploy'
     }
- // stage('Archive atifacts'){
-        //archiveArtifacts artifacts: 'spring-petclinic/*.war',onlyIfSuccessful: true
+/*stage('Archive atifacts'){
+      archiveArtifacts artifacts: 'spring-petclinic/*.war',onlyIfSuccessful: true
         
-  //  }
-    Stage ('Upload war To Nexus'){
-        
-        
-      shell mvn deploy:deploy-file -DgeneratePom=false -DrepositoryId=nexus -Durl=http://http://13.126.21.144:8081/repository/maven-snapshots -DpomFile=pom.xml -Dfile=target/petclinic-1.0.0.jar     
-              }
-	
-    
-    stage('Archive Test Results'){
+  }*/
+        stage('Archive Test Results'){
         shell "mvn insall tomcat7:deploy"
         junit allowEmptyResults: true, testResults: '**/surefire-reports/*.xml'
     }
