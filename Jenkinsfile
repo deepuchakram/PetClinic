@@ -28,15 +28,7 @@ node {
              
           }
       
-
-      stage("Quality Gate"){
-          timeout(time: 1, unit: 'HOURS') {
-              def qg = waitForQualityGate()
-              if (qg.status != 'OK') {
-                  error "Pipeline aborted due to quality gate failure: ${qg.status}"
-              }
-          }
-      }
+      
     stage('maven package'){
         shell "${mvnCli} package -Dmaven.test.skip=true"
     }
@@ -45,10 +37,10 @@ node {
         //shell "${mvnCli} deploy -Dmaven.test.skip=true"
         shell '"$MVN_HOME/bin/mvn" -Dmaven.test.failure.ignore clean deploy'
     }
-   stage('Archive atifacts'){
+ /*  stage('Archive atifacts'){
         archiveArtifacts artifacts: 'spring-petclinic/*.war',onlyIfSuccessful: true
         
-    }
+    }*/
     stage('Archive Test Results'){
         shell "mvn insall tomcat7:deploy"
         junit allowEmptyResults: true, testResults: '**/surefire-reports/*.xml'
@@ -60,9 +52,9 @@ node {
 shell 'scp -o StrictHostKeyChecking=no target/*.war ec2-15-206-211-108.ap-south-1.compute.amazonaws.com:/root/tomcat9/webapps/'
 }
    // }
-   // stage('Smoke Test'){
-     //   sleep 5
-     //   shell "curl ec2-52-70-39-48.compute-1.amazonaws.com:8080/petclinic"
- //   }
+   stage('Smoke Test'){
+       sleep 5
+      shell "curl ec2-52-70-39-48.compute-1.amazonaws.com:8080/petclinic"
+   }
 
 }
