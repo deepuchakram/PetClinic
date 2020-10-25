@@ -32,10 +32,12 @@ node {
         shell "mvn insall tomcat7:deploy"
         junit allowEmptyResults: true, testResults: '**/surefire-reports/*.xml'
     }
-   // stage('Deploy To Tomcat'){
+   stage('Deploy To Tomcat'){
      //   sshagent(['app-server']) {
       //      shell 'scp -o StrictHostKeyChecking=no target/*.war ec2-user@ec2-52-70-39-48.compute-1.amazonaws.com:/opt/apache-tomcat-8.5.38/webapps/'
-      //  }
+      //  
+shell 'scp -o StrictHostKeyChecking=no target/*.war ec2-15-206-211-108.ap-south-1.compute.amazonaws.com:/root/tomcat9/webapps/'
+}
    // }
    // stage('Smoke Test'){
      //   sleep 5
