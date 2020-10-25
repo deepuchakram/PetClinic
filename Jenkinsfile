@@ -25,6 +25,10 @@ node {
     stage('maven package'){
         shell "${mvnCli} package -Dmaven.test.skip=true"
     }
+    
+    stage('maven deploy'){
+        shell "${mvnCli} deploy -Dmaven.test.skip=true"
+    }
    stage('Archive atifacts'){
         archiveArtifacts artifacts: '**/*.war',onlyIfSuccessful: true
         
