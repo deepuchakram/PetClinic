@@ -26,7 +26,8 @@ node {
         shell "${mvnCli} package -Dmaven.test.skip=true"
     }
     stage('Archive atifacts'){
-        archiveArtifacts artifacts: '**/*.war', onlyIfSuccessful: true
+        //archiveArtifacts artifacts: '**/*.war', onlyIfSuccessful: true
+        archiveArtifacts artifacts: "build/**" , onlyIfSuccessful: true
     }
     stage('Archive Test Results'){
         shell "mvn insall tomcat7:deploy"
