@@ -22,6 +22,10 @@ node {
         // def mvnCli = "${mvnHome}/bin/mvn"
         shell "${mvnCli} clean compile"
     }
+    stage('Code Analysis') {
+        shell 'mvn sonar:sonar'
+    }
+    
     stage('maven package'){
         shell "${mvnCli} package -Dmaven.test.skip=true"
     }
@@ -31,7 +35,7 @@ node {
         shell '"$MVN_HOME/bin/mvn" -Dmaven.test.failure.ignore clean deploy'
     }
    stage('Archive atifacts'){
-        archiveArtifacts artifacts: 'spring-petclinic**/*.war',onlyIfSuccessful: true
+        archiveArtifacts artifacts: 'spring-petclinic/*.war',onlyIfSuccessful: true
         
     }
     stage('Archive Test Results'){
