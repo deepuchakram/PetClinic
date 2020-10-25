@@ -27,10 +27,11 @@ node {
     }
     
     stage('maven deploy'){
-        shell "${mvnCli} deploy -Dmaven.test.skip=true"
+        //shell "${mvnCli} deploy -Dmaven.test.skip=true"
+        shell '"$MVN_HOME/bin/mvn" -Dmaven.test.failure.ignore clean deploy'
     }
    stage('Archive atifacts'){
-        archiveArtifacts artifacts: '**/*.war',onlyIfSuccessful: true
+        archiveArtifacts artifacts: 'spring-petclinic**/*.war',onlyIfSuccessful: true
         
     }
     stage('Archive Test Results'){
