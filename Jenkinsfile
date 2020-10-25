@@ -25,10 +25,10 @@ node {
     stage('maven package'){
         shell "${mvnCli} package -Dmaven.test.skip=true"
     }
-  /*  stage('Archive atifacts'){
-        archiveArtifacts artifacts: '/*.war',onlyIfSuccessful: true
+   stage('Archive atifacts'){
+        archiveArtifacts artifacts: '**/*.war',onlyIfSuccessful: true
         
-    }*/
+    }
     stage('Archive Test Results'){
         shell "mvn insall tomcat7:deploy"
         junit allowEmptyResults: true, testResults: '**/surefire-reports/*.xml'
