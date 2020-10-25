@@ -22,15 +22,22 @@ node {
         // def mvnCli = "${mvnHome}/bin/mvn"
         shell "${mvnCli} clean compile"
     }
-    stage('Code Analysis') {
-        shell 'mvn sonar:sonar'
-    }
-    stage("Quality Gate") {
-        timeout(time: 1, unit: 'HOURS') {
-            waitForQualityGate abortPipeline: true
-        }
-    }
-    
+   stage("build & SonarQube analysis") {
+          node {
+              withSonarQubeEnv('My SonarQube Server') {
+                 shell 'mvn clean package sonar:sonar'
+              }
+          }
+      }
+
+      stage("Quality Gate"){
+          timeout(time: 1, unit: 'HOURS') {
+              def qg = waitForQualityGate()
+              if (qg.status != 'OK') {
+                  error "Pipeline aborted due to quality gate failure: ${qg.status}"
+              }
+          }
+      }
     stage('maven package'){
         shell "${mvnCli} package -Dmaven.test.skip=true"
     }
