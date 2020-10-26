@@ -18,7 +18,7 @@ node {
         echo "$JENKINS_URL"
     }
     stage('Build') {
-      mvn 'clean install -DskipTests'
+      shell mvn 'clean install -DskipTests'
     }
     
     stage('maven compile'){
@@ -28,11 +28,11 @@ node {
     }
 
     stage('Unit Test') {
-      mvn 'test'
+      shell mvn 'test'
     }
 
     stage('Integration Test') {
-      mvn 'verify -DskipUnitTests'
+      shell mvn 'verify -DskipUnitTests'
     }
     
     
@@ -48,10 +48,10 @@ node {
         //shell "${mvnCli} deploy -Dmaven.test.skip=true"
         shell '"$MVN_HOME/bin/mvn" -Dmaven.test.failure.ignore clean deploy'
     }
-stage('Push To Nexus'){
-shell 'mvn clean package'
+    stage('Push To Nexus'){
+        shell 'mvn clean package'
      // archiveArtifacts artifacts: 'target/*.war', onlyIfSuccessful: true
-    nexusArtifactUploader artifacts: [[artifactId: 'spring-petclinic',
+     nexusArtifactUploader artifacts: [[artifactId: 'spring-petclinic',
                                        classifier: '', file: 'target/petclinic-1.0-SNAPSHOT.war', 
                                        type: 'war']], 
         credentialsId: 'nexus', groupId: 'org.springframework.samples', nexusUrl: 'http://13.126.21.144:8081/', 
