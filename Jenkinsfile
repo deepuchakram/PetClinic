@@ -72,8 +72,8 @@ node {
    stage('Deploy To Tomcat'){
      //   sshagent(['app-server']) {
       //      shell 'scp -o StrictHostKeyChecking=no target/*.war ec2-user@ec2-52-70-39-48.compute-1.amazonaws.com:/opt/apache-tomcat-8.5.38/webapps/'
-      //  
-        shell 'scp -o StrictHostKeyChecking=no target/*.war ec2-13-127-201-210.ap-south-1.compute.amazonaws.com:/opt/apache-tomcat-8.5.35/webapps'
+       sshagent('tomcat')
+        shell 'scp -o StrictHostKeyChecking=no target/*.war ec2-13-127-201-210.ap-south-1.compute.amazonaws.com:8081 /opt/apache-tomcat-8.5.35/webapps'
 }
    // }
    stage('Smoke Test'){
