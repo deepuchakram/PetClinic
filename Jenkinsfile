@@ -55,11 +55,11 @@ node {
                                        type: 'war']], 
         credentialsId: 'nexus', groupId: 'org.springframework.samples', nexusUrl: 'http://13.126.21.144:8081/', 
         nexusVersion: 'nexus3', protocol: 'http', repository: 'spring-petclinic', version: '4.2.5-SNAPSHOT' */
-        nexusArtifactUploader artifacts: [[artifactId: 'spring-petclinic', classifier: '', file: 'target/petclinic.war', type: 'war']], credentialsId: 'nexus', groupId: 'org.springframework.samples', nexusUrl: '13.126.21.144:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'spring-petclinic', version: '4.2.5-SNAPSHOT'
+       // nexusArtifactUploader artifacts: [[artifactId: 'spring-petclinic', classifier: '', file: 'target/petclinic.war', type: 'war']], credentialsId: 'nexus', groupId: 'org.springframework.samples', nexusUrl: '13.126.21.144:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'spring-petclinic', version: '4.2.5-SNAPSHOT'
   } 
-    stage('Archive artifacts') {
+    /*stage('Archive artifacts') {
       archive 'target/*.war'
-   }
+   }*/
     
     stage('Archive Test Results'){
         shell "mvn insall tomcat7:deploy"
