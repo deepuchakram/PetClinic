@@ -48,16 +48,15 @@ node {
         //shell "${mvnCli} deploy -Dmaven.test.skip=true"
         shell '"$MVN_HOME/bin/mvn" -Dmaven.test.failure.ignore clean deploy'
     }
-    /* stage('Push To Nexus'){
+    stage('Push To Nexus'){
         shell 'mvn clean package'
      // archiveArtifacts artifacts: 'target/*.war', onlyIfSuccessful: true
-     nexusArtifactUploader artifacts: [[artifactId: 'spring-petclinic',
-                                       classifier: '', file: 'target/petclinic-1.0-SNAPSHOT.war', 
+     /*nexusArtifactUploader artifacts: [[artifactId: 'spring-petclinic', classifier: '', file: 'target/petclinic-1.0-SNAPSHOT.war', 
                                        type: 'war']], 
         credentialsId: 'nexus', groupId: 'org.springframework.samples', nexusUrl: 'http://13.126.21.144:8081/', 
-        nexusVersion: 'nexus3', protocol: 'http', repository: 'spring-petclinic', version: '4.2.5-SNAPSHOT'
-        
-  } */
+        nexusVersion: 'nexus3', protocol: 'http', repository: 'spring-petclinic', version: '4.2.5-SNAPSHOT' */
+        nexusArtifactUploader artifacts: [[artifactId: 'spring-petclinic', classifier: '', file: 'target/petclinic.war', type: 'war']], credentialsId: 'nexus', groupId: 'org.springframework.samples', nexusUrl: '13.126.21.144:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'spring-petclinic', version: '4.2.5-SNAPSHOT'
+  } 
     stage('Archive artifacts') {
       archive 'target/*.war'
    }
