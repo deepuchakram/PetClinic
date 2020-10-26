@@ -16,12 +16,24 @@ node {
     stage('Read praram'){
         echo "The environment chosen during the Job execution is ${params.environment}"
         echo "$JENKINS_URL"
+    }stage('Build') {
+      mvn 'clean install -DskipTests'
     }
     stage('maven compile'){
         // def mvnHome = tool name: 'Maven', type: 'maven'
         // def mvnCli = "${mvnHome}/bin/mvn"
         shell "${mvnCli} clean compile"
     }
+
+    stage('Unit Test') {
+      mvn 'test'
+    }
+
+    stage('Integration Test') {
+      mvn 'verify -DskipUnitTests'
+    }
+    
+    
    stage("build & SonarQube analysis") {
         shell 'mvn clean package sonar:sonar'      
         }
