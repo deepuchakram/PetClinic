@@ -18,7 +18,7 @@ node {
         echo "$JENKINS_URL"
     }
     stage('Build') {
-      shell mvn 'clean install -DskipTests'
+      shell 'mvn clean install -DskipTests'
     }
     
     stage('maven compile'){
@@ -28,11 +28,11 @@ node {
     }
 
     stage('Unit Test') {
-      shell mvn 'test'
+      shell 'mvn test'
     }
 
     stage('Integration Test') {
-      shell mvn 'verify -DskipUnitTests'
+      shell 'mvn verify -DskipUnitTests'
     }
     
     
