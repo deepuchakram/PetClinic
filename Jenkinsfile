@@ -39,22 +39,23 @@ shell 'mvn clean package'
       archiveArtifacts artifacts: 'target/*.war', onlyIfSuccessful: true
         
   }*/
-    stage('Results') {
+    stage('Archive atifacts') {
       archive 'target/*.war'
    }
-   stage('deploy') {
-   		sh "cp -p **/*.war /opt/tomcat/webapps"
-   }
-   	  
-        stage('Archive Test Results'){
+    
+    stage('Archive Test Results'){
         shell "mvn insall tomcat7:deploy"
         junit allowEmptyResults: true, testResults: '**/surefire-reports/*.xml'
     }
+    
+    stage('deploy') {
+   		shell "cp -p **/*.war /opt/apache-tomcat-8.5.35/webapps"
+   }
    stage('Deploy To Tomcat'){
      //   sshagent(['app-server']) {
       //      shell 'scp -o StrictHostKeyChecking=no target/*.war ec2-user@ec2-52-70-39-48.compute-1.amazonaws.com:/opt/apache-tomcat-8.5.38/webapps/'
       //  
-shell 'scp -o StrictHostKeyChecking=no target/*.war ec2-15-206-211-108.ap-south-1.compute.amazonaws.com:/root/tomcat9/webapps/'
+        shell 'scp -o StrictHostKeyChecking=no target/*.war ec2-13-127-201-210.ap-south-1.compute.amazonaws.com:/opt/apache-tomcat-8.5.35/webapps'
 }
    // }
    stage('Smoke Test'){
