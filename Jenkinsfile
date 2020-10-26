@@ -38,12 +38,13 @@ node {
 shell 'mvn clean package'
       archiveArtifacts artifacts: 'target/*.war', onlyIfSuccessful: true
         
-  }*/ stage('Results') {
+  }*/
+    stage('Results') {
       archive 'target/*.war'
    }
-  /* stage('deploy') {
+   stage('deploy') {
    		sh "cp -p **/*.war /opt/tomcat/webapps"
-   }*/
+   }
    	  
         stage('Archive Test Results'){
         shell "mvn insall tomcat7:deploy"
