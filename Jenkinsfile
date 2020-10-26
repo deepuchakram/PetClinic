@@ -16,9 +16,11 @@ node {
     stage('Read praram'){
         echo "The environment chosen during the Job execution is ${params.environment}"
         echo "$JENKINS_URL"
-    }stage('Build') {
+    }
+    stage('Build') {
       mvn 'clean install -DskipTests'
     }
+    
     stage('maven compile'){
         // def mvnHome = tool name: 'Maven', type: 'maven'
         // def mvnCli = "${mvnHome}/bin/mvn"
