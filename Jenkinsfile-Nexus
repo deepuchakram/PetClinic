@@ -1,0 +1,53 @@
+node {
+	 git 'https://github.com/deepuchakram/PetClinic.git'
+   if(params){
+			print(params.version)
+			stage(params.version) {
+			git branch: params.version
+			git 'https://github.com/deepuchakram/PetClinic.git'
+			}
+		    stage('Build') {
+			// Checking that is it Unix based or not
+			// If it is Unix based then we will go ahead
+			if (isUnix()) {
+			shell "'mvn' package"
+			} 
+	    }
+		// Upload to nexus repository
+			nexusArtifactUploader artifacts: [[artifactId: 'spring-petclinic', classifier: '', file: 'target/petclinic-1.0-SNAPSHOT.war', type: 'war']], credentialsId: 'nexus', groupId: 'org.springframework.samples', nexusUrl: 'http://13.126.21.144:8081/', nexusVersion: 'nexus3', protocol: 'http', repository: 'spring-petclinic', version: 4.2.5-SNAPSHOT
+
+	}else{
+		stage('1.0') {
+			git branch: '1.0'
+			git 'https://github.com/deepuchakram/PetClinic.git'
+			}
+			stage('Build') {
+			// Checking that is it Unix based or not
+			// If it is Unix based then we will go ahead
+	  if (isUnix()) {
+	      sh "'mvn' package"
+	  } 
+		}
+		// Upload to nexus repository
+	//nexusArtifactUploader artifacts: [[artifactId: '1', classifier: '', file: 'target/my-app-1.0-SNAPSHOT.jar', type: 'jar']], credentialsId: '40364ae5-0277-48e5-856f-d8f4b01867aa', groupId: 'my-app', nexusUrl: 'localhost:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'maven-releases', version: 'master'
+		nexusArtifactUploader artifacts: [[artifactId: 'spring-petclinic', classifier: '', file: 'target/petclinic-1.0-SNAPSHOT.war', type: 'war']], credentialsId: 'nexus', groupId: 'org.springframework.samples', nexusUrl: 'http://13.126.21.144:8081/', nexusVersion: 'nexus3', protocol: 'http', repository: 'spring-petclinic', version: 'master'
+
+    stage('2.0') { 
+	      git branch: '2.0'
+	      git 'https://github.com/deepuchakram/PetClinic.git'
+	  }
+			stage('Build') {
+			// Run the maven build
+
+	      // Checking that is it Unix based or not
+	      // If it is Unix based then we will go ahead
+	      if (isUnix()) {
+		  sh "'mvn' package"
+		} 
+			}
+	//nexusArtifactUploader artifacts: [[artifactId: '1', classifier: '', file: 'target/my-app-1.0-SNAPSHOT.jar', type: 'jar']], credentialsId: '40364ae5-0277-48e5-856f-d8f4b01867aa', groupId: 'my-app', nexusUrl: 'localhost:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'maven-releases', version: '1.0'
+nexusArtifactUploader artifacts: [[artifactId: 'spring-petclinic', classifier: '', file: 'target/petclinic-1.0-SNAPSHOT.war', type: 'war']], credentialsId: 'nexus', groupId: 'org.springframework.samples', nexusUrl: 'http://13.126.21.144:8081/', nexusVersion: 'nexus3', protocol: 'http', repository: 'spring-petclinic', version: 1.0
+
+	}
+
+}
